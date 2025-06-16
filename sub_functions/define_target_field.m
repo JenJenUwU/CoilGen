@@ -10,7 +10,21 @@ loaded_target_field=load(cd+"\"+"target_fields"+"\"+input.target_field_definitio
 else
 loaded_target_field=load(cd+"/"+"target_fields"+"/"+input.target_field_definition_file);
 end
+
+% Check if this is a pre-processed target field (has direct fields b, coords, etc.)
 struct_name=fieldnames(loaded_target_field);
+first_field = loaded_target_field.(struct_name{1});
+
+% If this is already a pre-processed target field with expected structure
+if isfield(first_field, 'b') && isfield(first_field, 'coords') && isfield(first_field, 'weights')
+    target_field_out = first_field;
+    is_supressed_point = zeros(1, size(target_field_out.b, 2));
+    if ~isfield(target_field_out, 'target_field_group_inds')
+        target_field_out.target_field_group_inds = ones(1, size(target_field_out.b, 2));
+    end
+    return;
+end
+
 loaded_target_field=getfield(loaded_target_field,struct_name{1});
 if isfield(loaded_target_field,input.target_field_definition_field_name)
 loaded_field=getfield(loaded_target_field,input.target_field_definition_field_name);
