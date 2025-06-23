@@ -1,4 +1,4 @@
-function [target_field_out,is_supressed_point]= define_target_field(coil_parts,target_mesh,secondary_target_mesh,input)
+function [target_field_out,is_supressed_point]=define_target_field(coil_parts,target_mesh,secondary_target_mesh,input)
 
 
 
@@ -160,7 +160,6 @@ target_field_out.coords=target_points;
 target_field_out.weights=target_field_weighting;
 target_field_out.target_field_group_inds=target_field_group_inds;
 target_field_out.target_gradient_dbdxyz=[target_dbzbx; target_dbzby; target_dbzbz];
-
 
 
 end
